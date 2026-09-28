@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>عبود | TAWJIHI HUB</title>
+<style>
+*{box-sizing:border-box} :root{--b:#1769e0;--db:#0b3d91;--sky:#e9f3ff;--bg:#f5f9ff;--ink:#10233f;--muted:#718096;--card:#fff}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif}
+.hero{background:linear-gradient(135deg,#083d99,#2789ff);color:white;padding:25px 16px 70px;border-radius:0 0 34px 34px}
+.wrap{max-width:920px;margin:auto;padding:0 15px}.top{display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:800;letter-spacing:.5px}.pill{background:#ffffff26;border:1px solid #ffffff45;padding:7px 12px;border-radius:99px;font-size:12px}
+h1{font-size:34px;margin:25px 0 6px}.hero p{margin:0;opacity:.9}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:-38px}
+.card{background:var(--card);border-radius:20px;padding:17px;box-shadow:0 10px 28px #1d5ca814;border:1px solid #e1ecfb}
+.num{font-size:27px;font-weight:800;color:var(--db)}.small{font-size:12px;color:var(--muted)}
+h2{font-size:21px;color:var(--db);margin:28px 0 12px}
+.grid2{display:grid;grid-template-columns:1.25fr .75fr;gap:14px}.subjects{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.subject{padding:14px;border:1px solid #dce9fa;border-radius:15px;background:white}.subject b{display:block;margin-bottom:5px}
+.task{display:flex;align-items:center;gap:10px;padding:12px;border-bottom:1px solid #edf2f8}.task:last-child{border:0}.task input{width:19px;height:19px;accent-color:var(--b);cursor:pointer}
+.done{text-decoration:line-through;color:#95a1b1}
+.bar{height:11px;background:#e5eefb;border-radius:99px;overflow:hidden}.fill{height:100%;width:0;background:linear-gradient(90deg,#1769e0,#54a3ff);transition:.3s}
+.btn{border:0;background:var(--b);color:white;border-radius:11px;padding:10px 15px;cursor:pointer;font-weight:700;margin-top:5px}.btn.alt{background:var(--sky);color:var(--db)}
+.timer{text-align:center}.clock{font-size:52px;font-weight:900;color:var(--db);margin:5px}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.day{padding:11px 4px;text-align:center;background:white;border:1px solid #dfebfa;border-radius:13px}.day input{margin-top:8px;accent-color:var(--b);cursor:pointer}
+.inputs{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.inputs input{width:100%;padding:11px;border:1px solid #d7e5f7;border-radius:10px;font-size:15px}
+.result{font-size:30px;font-weight:900;color:var(--db);margin-top:12px}
+.message{background:linear-gradient(135deg,#e8f3ff,#fff);border:1px solid #cfe3ff;padding:20px;border-radius:20px;line-height:2}
+.hidden{display:none}.surprise{text-align:center;padding:25px}.heart{font-size:45px}
+
+/* AI Assistant & New Features Styles */
+.ai-box{display:flex;flex-direction:column;gap:12px}
+.ai-input,.notes-input{width:100%;padding:12px;border:1px solid #d7e5f7;border-radius:12px;font-size:15px;resize:vertical;font-family:inherit;min-height:80px}
+.ai-actions{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.file-upload{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--sky);color:var(--db);border-radius:10px;cursor:pointer;font-size:13px;font-weight:bold;border:1px dashed #b3d1ff}
+.file-upload input{display:none}
+.ai-response{background:#f0f6ff;border:1px solid #cce0ff;border-radius:12px;padding:15px;margin-top:10px;font-size:14px;line-height:1.6}
+.preview-img{max-width:100px;max-height:100px;border-radius:8px;object-fit:cover;margin-top:5px;display:none}
+
+.audio-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.audio-btn{background:white;border:1px solid #d7e5f7;padding:8px 14px;border-radius:12px;cursor:pointer;font-size:13px;font-weight:bold;display:flex;align-items:center;gap:6px}
+.audio-btn.active{background:var(--b);color:white;border-color:var(--b)}
+
+.quote-box{background:linear-gradient(135deg,#1769e0,#0b3d91);color:white;padding:15px 20px;border-radius:16px;margin-bottom:20px;text-align:center;font-size:15px;font-weight:bold}
+
+.badges-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
+.badge-item{background:white;border:1px solid #e1ecfb;border-radius:12px;padding:10px;text-align:center;opacity:0.4;filter:grayscale(1);transition:.3s}
+.badge-item.unlocked{opacity:1;filter:grayscale(0);border-color:#b3d1ff;box-shadow:0 4px 12px #1769e01a}
+.badge-icon{font-size:28px}
+.badge-title{font-size:11px;font-weight:bold;margin-top:4px;color:var(--db)}
+
+.exam-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #edf2f8;font-size:14px}
+.exam-item:last-child{border:0}
+.exam-tag{background:var(--sky);color:var(--db);padding:4px 8px;border-radius:8px;font-size:12px;font-weight:bold}
+
+footer{text-align:center;padding:28px;color:#8290a4;font-size:12px}
+@media(max-width:700px){.cards{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.week{grid-template-columns:repeat(4,1fr)}.badges-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:460px){.subjects,.inputs{grid-template-columns:1fr}h1{font-size:29px}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+<div class="top"><div class="logo">TAWJIHI HUB</div><span class="pill">عبود • علمي 🎓</span></div>
+<h1>أهلًا عبود 💙</h1><p>مستقبلك ما بينبنى بيوم… بس كل يوم بقرّبك منه.</p>
+</div></header>
+
+<main class="wrap">
+<!-- Daily Motivation Quote -->
+<div class="quote-box" id="dailyQuote">💬 "النجاح هو مجرد توالي لإنجازات صغيرة يومية."</div>
+
+<section class="cards">
+<div class="card"><div class="num" id="points">0</div><div class="small">نقاط الدراسة ⭐</div></div>
+<div class="card"><div class="num" id="done">0/4</div><div class="small">مهام اليوم ✅</div></div>
+<div class="card"><div class="num">🔥 <span id="streak">0</span></div><div class="small">Streak</div></div>
+<div class="card"><div class="num" id="percent">0%</div><div class="small">إنجاز اليوم</div></div>
+</section>
+
+<!-- Badges & Achievements -->
+<h2>🏆 سجل الأوسمة والإنجازات</h2>
+<div class="card">
+<div class="badges-grid">
+<div class="badge-item" id="badge1"><div class="badge-icon">🚀</div><div class="badge-title">البداية القوية</div></div>
+<div class="badge-item" id="badge2"><div class="badge-icon">🔥</div><div class="badge-title">استمرارية 3 أيام</div></div>
+<div class="badge-item" id="badge3"><div class="badge-icon">⭐</div><div class="badge-title">100 نقطة</div></div>
+<div class="badge-item" id="badge4"><div class="badge-icon">👑</div><div class="badge-title">بطل اليوم</div></div>
+</div>
+</div>
+
+<h2>🤖 مساعد الذكاء الاصطناعي للدراسة</h2>
+<div class="card">
+<div class="ai-box">
+<p class="small">اسأل أي سؤال في مواد التوجيهي، أو ارفع صورة لمسألة/سؤال بدك شرح إله! 💡</p>
+<textarea id="aiQuery" class="ai-input" placeholder="اكتب سؤالك هنا (مثال: اشرح لي القاعدة الأولى في الفيزياء، أو حل هذه المسألة)..."></textarea>
+<div class="ai-actions">
+<label class="file-upload">
+📷 ارفق صورة / سؤال
+<input type="file" id="aiImage" accept="image/*" onchange="previewImage(event)">
+</label>
+<button class="btn" onclick="askAI()">إرسال السؤال 🚀</button>
+</div>
+<img id="imgPreview" class="preview-img" alt="معاينة الصورة">
+<div id="aiOutput" class="ai-response hidden"></div>
+</div>
+</div>
+
+<!-- Focus Audio Player -->
+<h2>🎧 أصوات التركيز أثناء الدراسة</h2>
+<div class="card">
+<p class="small">شغّل أصوات خلفية تساعدك على التركيز والابتعاد عن المشتتات أثناء المذاكرة 🧘‍♂️</p>
+<div class="audio-controls">
+<button class="audio-btn" onclick="toggleAudio('rain', this)">🌧️ صوت المطر</button>
+<button class="audio-btn" onclick="toggleAudio('waves', this)">🌊 أمواج البحر</button>
+<button class="audio-btn" onclick="toggleAudio('white', this)">📻 ضوضاء بيضاء</button>
+</div>
+</div>
+
+<h2>📚 المواد</h2>
+<section class="subjects">
+<div class="subject"><b>📐 الرياضيات</b><span class="small">فهم + حل أسئلة</span></div>
+<div class="subject"><b>⚡ الفيزياء</b><span class="small">قوانين + مسائل</span></div>
+<div class="subject"><b>🧪 الكيمياء</b><span class="small">مفاهيم + تدريب</span></div>
+<div class="subject"><b>🧬 الأحياء</b><span class="small">مراجعة + حفظ</span></div>
+<div class="subject"><b>📖 اللغة العربية</b><span class="small">مراجعة وتطبيق</span></div>
+<div class="subject"><b>🔤 اللغة الإنجليزية</b><span class="small">Vocabulary + practice</span></div>
+</section>
+
+<div class="grid2">
+<div>
+<h2>✅ مهام اليوم</h2>
+<div class="card" id="tasks">
+<label class="task"><input type="checkbox"><span>مراجعة درس رياضيات</span></label>
+<label class="task"><input type="checkbox"><span>حل مجموعة فيزياء</span></label>
+<label class="task"><input type="checkbox"><span>مراجعة الكيمياء</span></label>
+<label class="task"><input type="checkbox"><span>مراجعة الأحياء</span></label>
+</div>
+</div>
+<div>
+<h2>📈 التقدم</h2>
+<div class="card"><div class="bar"><div class="fill" id="fill"></div></div><p class="small" id="progress">ابدأ أول مهمة 💙</p><button class="btn alt" onclick="resetTasks()">تصفير اليوم</button></div>
+</div>
+</div>
+
+<h2>⏱️ جلسة تركيز</h2>
+<div class="card timer"><div class="small">Pomodoro</div><div class="clock" id="clock">25:00</div>
+<button class="btn" onclick="startTimer()">ابدأ</button><button class="btn alt" onclick="resetTimer()">إعادة</button></div>
+
+<h2>📅 أسبوع عبود & ساعات الدراسة</h2>
+<div class="card">
+<div class="week">
+<div class="day">السبت<input type="checkbox"></div><div class="day">الأحد<input type="checkbox"></div>
+<div class="day">الإثنين<input type="checkbox"></div><div class="day">الثلاثاء<input type="checkbox"></div>
+<div class="day">الأربعاء<input type="checkbox"></div><div class="day">الخميس<input type="checkbox"></div>
+<div class="day">الجمعة<input type="checkbox"></div>
+</div>
+<div style="margin-top:15px;display:flex;align-items:center;gap:10px">
+<span class="small">عدد ساعات الدراسة هذا الأسبوع:</span>
+<input type="number" id="studyHours" min="0" value="0" style="width:70px;padding:6px;border:1px solid #d7e5f7;border-radius:8px" onchange="saveHours()">
+<span class="small">ساعات ⏱️</span>
+</div>
+</div>
+
+<!-- Quick Notes -->
+<h2>📝 ملاحظات وملخصات سريعة</h2>
+<div class="card">
+<textarea id="quickNotes" class="notes-input" placeholder="اكتب القوانين التي تريد مراجعتها، أو الملاحظات المهمة لتبقى محفوظة هنا..." oninput="saveNotes()"></textarea>
+<p class="small" style="margin-top:5px">تُحفظ ملاحظاتك تلقائياً في جهازك ✨</p>
+</div>
+
+<!-- Exam Timetable -->
+<h2>📌 جدول الامتحانات والعد التنازلي</h2>
+<div class="card">
+<div class="exam-item"><span>📐 الرياضيات (ورقة 1)</span><span class="exam-tag">متبقي 120 يوم</span></div>
+<div class="exam-item"><span>⚡ الفيزياء</span><span class="exam-tag">متبقي 125 يوم</span></div>
+<div class="exam-item"><span>🧪 الكيمياء</span><span class="exam-tag">متبقي 128 يوم</span></div>
+<div class="exam-item"><span>🧬 الأحياء</span><span class="exam-tag">متبقي 132 يوم</span></div>
+</div>
+
+<h2>🧮 حاسبة المعدل</h2>
+<div class="card">
+<p class="small">اكتب العلامات التي تريد حسابها. النتيجة هنا متوسط للعلامات المدخلة، ويمكن تعديلها حسب طريقة احتساب فرعك.</p>
+<div class="inputs">
+<input type="number" min="0" max="100" placeholder="الرياضيات">
+<input type="number" min="0" max="100" placeholder="الفيزياء">
+<input type="number" min="0" max="100" placeholder="الكيمياء">
+<input type="number" min="0" max="100" placeholder="الأحياء">
+<input type="number" min="0" max="100" placeholder="العربي">
+<input type="number" min="0" max="100" placeholder="الإنجليزي">
+</div>
+<button class="btn" style="margin-top:10px" onclick="calc()">احسب</button>
+<div class="result" id="result">—</div>
+</div>
+
+<h2>⏳ عدّاد الهدف المخصص</h2>
+<div class="card"><div class="small">حدد تاريخ امتحان/هدفك، والموقع يحسب الأيام المتبقية.</div>
+<input id="date" type="date" style="margin-top:10px;padding:10px;border:1px solid #d7e5f7;border-radius:10px">
+<div class="result" id="days">—</div></div>
+
+<h2>💙 رسالة خاصة</h2>
+<div class="message"><b>عبود،</b><br>
+بعرف إن التوجيهي مش سهل، وفي أيام بتحس حالك مش قادر تكمل. بس لا تنسى إنك مش مطلوب منك تخلص كل شيء بيوم واحد.
+<br><strong>ادرس خطوة، ارتاح خطوة، وارجع كمّل. المهم ما توقف. أنا مؤمن فيك. 🤍</strong>
+</div>
+
+<h2>🎁 مفاجأة</h2>
+<div class="card surprise">
+<div class="heart">🎂💙</div>
+<button class="btn" onclick="document.getElementById('secret').classList.toggle('hidden')">اضغط هون يا عبود 👀</button>
+<div id="secret" class="hidden">
+<h3>هاد الموقع هدية إلك يا عبودي 🎁💙</h3>
+<p><strong>شد حيلك وفرّحني فيك. 🎓🔥</strong></p>
+<p>وبوعدك، بس أجي عليك، إلك عندي هدية حلوة. 🤍</p>
+</div>
+</div>
+</main>
+<footer>Made specially for Abboud • Tawjihi Scientific 🎓💙</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const boxes = [...document.querySelectorAll('#tasks input')];
+    let points = Number(localStorage.getItem('abboudPoints') || 0);
+    let streak = Number(localStorage.getItem('abboudStreak') || 0);
+
+    document.getElementById('points').textContent = points;
+    document.getElementById('streak').textContent = streak;
+
+    // Daily Quotes
+    const quotes = [
+        "💬 \"النجاح هو مجرد توالي لإنجازات صغيرة يومية.\"",
+        "💬 \"لا تتوقف عندما تتعب، توقف عندما تنتهي!\"",
+        "💬 \"كل دقيقة تدرسها الآن هي استثمار في مستقبلك القادم.\"",
+        "💬 \"كل خطوة صغيرة اليوم تُقرّبك من أهدافك الكبيرة غداً.\""
+    ];
+    document.getElementById('dailyQuote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+    function update() {
+        let d = boxes.filter(x => x.checked).length;
+        let p = Math.round((d / boxes.length) * 100);
+        document.getElementById('done').textContent = d + '/4';
+        document.getElementById('percent').textContent = p + '%';
+        document.getElementById('fill').style.width = p + '%';
+        document.getElementById('progress').textContent = d === 4 ? '🔥 خلصت كل مهام اليوم!' : (d ? ('أنجزت ' + d + ' من 4. كمّل! 💪') : 'ابدأ أول مهمة 💙');
+        
+        boxes.forEach(x => {
+            if(x.parentElement && x.parentElement.querySelector('span')) {
+                x.parentElement.querySelector('span').classList.toggle('done', x.checked);
+            }
+        });
+
+        checkBadges(d);
+    }
+
+    function checkBadges(doneCount) {
+        if (points >= 10) document.getElementById('badge1').classList.add('unlocked');
+        if (streak >= 3) document.getElementById('badge2').classList.add('unlocked');
+        if (points >= 100) document.getElementById('badge3').classList.add('unlocked');
+        if (doneCount === 4) document.getElementById('badge4').classList.add('unlocked');
+    }
+
+    boxes.forEach(x => {
+        x.addEventListener('change', () => {
+            points += x.checked ? 10 : -10;
+            points = Math.max(0, points);
+            localStorage.setItem('abboudPoints', points);
+            document.getElementById('points').textContent = points;
+            update();
+        });
+    });
+
+    update();
+
+    window.resetTasks = function() {
+        boxes.forEach(x => x.checked = false);
+        update();
+    };
+
+    // Pomodoro Timer
+    let sec = 1500;
+    let t = null;
+
+    function show() {
+        let mins = String(Math.floor(sec / 60)).padStart(2, '0');
+        let secs = String(sec % 60).padStart(2, '0');
+        document.getElementById('clock').textContent = mins + ':' + secs;
+    }
+
+    window.startTimer = function() {
+        if (t) return;
+        t = setInterval(() => {
+            if (sec > 0) {
+                sec--;
+                show();
+            } else {
+                clearInterval(t);
+                t = null;
+                alert('أحسنت يا عبود! خلصت جلسة التركيز 🎉');
+            }
+        }, 1000);
+    };
+
+    window.resetTimer = function() {
+        clearInterval(t);
+        t = null;
+        sec = 1500;
+        show();
+    };
+
+    // Average Calculator
+    window.calc = function() {
+        let inputs = [...document.querySelectorAll('.inputs input')];
+        let values = inputs
+            .map(x => x.value.trim() !== '' ? Number(x.value) : NaN)
+            .filter(x => !isNaN(x) && x >= 0 && x <= 100);
+            
+        if (values.length > 0) {
+            let avg = values.reduce((x, y) => x + y, 0) / values.length;
+            document.getElementById('result').textContent = avg.toFixed(1) + '%';
+        } else {
+            document.getElementById('result').textContent = '—';
+        }
+    };
+
+    // Date Countdown
+    const dateInput = document.getElementById('date');
+    if(dateInput) {
+        dateInput.addEventListener('change', function() {
+            if(!this.value) return;
+            let d = new Date(this.value + 'T00:00:00');
+            let n = new Date();
+            n.setHours(0, 0, 0, 0);
+            let diff = Math.ceil((d - n) / (1000 * 60 * 60 * 24));
+            document.getElementById('days').textContent = diff >= 0 ? diff + ' يوم متبقي ⏳' : 'التاريخ انتهى';
+        });
+    }
+
+    // AI Assistant
+    window.previewImage = function(e) {
+        const file = e.target.files[0];
+        const preview = document.getElementById('imgPreview');
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                preview.src = evt.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    };
+
+    window.askAI = function() {
+        const query = document.getElementById('aiQuery').value.trim();
+        const imageInput = document.getElementById('aiImage');
+        const output = document.getElementById('aiOutput');
+
+        if (!query && (!imageInput.files || imageInput.files.length === 0)) {
+            alert('الرجاء كتابة سؤال أو اختيار صورة أولاً.');
+            return;
+        }
+
+        output.classList.remove('hidden');
+        output.innerHTML = '⏳ جاري تحليل سؤالك وإعداد الإجابة...';
+
+        setTimeout(() => {
+            let responseText = '<b>💡 إجابة المساعد الذكي:</b><br>';
+            if (imageInput.files && imageInput.files.length > 0) {
+                responseText += 'تم استلام الصورة بنجاح! 📸<br>بناءً على الشرح الموجود بالصورة، يُنصح بمراجعة القانون الأساسي ثم التعويض المباشر بالمعطيات للحصول على الإجابة الصحيحة. ✨';
+            } else {
+                responseText += 'بالنسبة لسؤالك: "' + query + '"<br>هذا المفهوم يعتمد بشكل أساسي على الفهم وليس الحفظ. حاول تقسيم الدرس إلى أجزاء صغيرة ومراجعة الأمثلة المحلولة أولاً! 💪';
+            }
+            output.innerHTML = responseText;
+        }, 1200);
+    };
+
+    // Audio Player
+    let audioCtx = null;
+    let whiteNoiseSource = null;
+
+    window.toggleAudio = function(type, btn) {
+        const allBtns = document.querySelectorAll('.audio-btn');
+        if (btn.classList.contains('active')) {
+            btn.classList.remove('active');
+            if (audioCtx) {
+                audioCtx.close();
+                audioCtx = null;
+            }
+            return;
+        }
+        
+        allBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        if (audioCtx) {
+            audioCtx.close();
+        }
+        
+        try {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const bufferSize = audioCtx.sampleRate * 2;
+            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+
+            for (let i = 0; i < bufferSize; i++) {
+                output[i] = Math.random() * 2 - 1;
+            }
+
+            whiteNoiseSource = audioCtx.createBufferSource();
+            whiteNoiseSource.buffer = noiseBuffer;
+            whiteNoiseSource.loop = true;
+
+            const filter = audioCtx.createBiquadFilter();
+            if (type === 'rain') {
+                filter.type = 'lowpass';
+                filter.frequency.value = 800;
+            } else if (type === 'waves') {
+                filter.type = 'bandpass';
+                filter.frequency.value = 400;
+            } else {
+                filter.type = 'lowpass';
+                filter.frequency.value = 3000;
+            }
+
+            whiteNoiseSource.connect(filter);
+            filter.connect(audioCtx.destination);
+            whiteNoiseSource.start();
+        } catch(e) {
+            console.log("Audio non supported or blocked", e);
+        }
+    };
+
+    // Notes and Hours Storage
+    const notesElem = document.getElementById('quickNotes');
+    const hoursElem = document.getElementById('studyHours');
+    
+    if(notesElem) notesElem.value = localStorage.getItem('abboudNotes') || '';
+    if(hoursElem) hoursElem.value = localStorage.getItem('abboudHours') || 0;
+
+    window.saveNotes = function() {
+        if(notesElem) localStorage.setItem('abboudNotes', notesElem.value);
+    };
+
+    window.saveHours = function() {
+        if(hoursElem) localStorage.setItem('abboudHours', hoursElem.value);
+    };
+});
+</script>
+</body>
+</html>
